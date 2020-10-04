@@ -20,12 +20,11 @@ No pom.xml do projeto indicar qual:
 
 
 ```
- <properties>
-    <db.navegador>chrome</db.navegador>
-    <db.url>https://www.sicredi.com.br/html/ferramenta/simulador-investimento-poupanca/</db.url>
-    <db.driver>webdriver.chrome.driver</db.driver>
-    <db.pathdriver>C:\selenium\chromedriver.exe</db.pathdriver>
-</properties>
+  <properties>
+                <db.navegador>chrome</db.navegador>
+                <db.url>http://automationpractice.com/index.php</db.url>
+                <db.driver>webdriver.chrome.driver</db.driver>
+   </properties>
 ```
 
 
@@ -37,9 +36,4 @@ No pom.xml do projeto indicar qual:
 Executar os testes via command:
 ```
 mvn clean test -D navegador=chrome
-
-ou
-
-mvn clean test -D navegador=firefox
-
 ```
