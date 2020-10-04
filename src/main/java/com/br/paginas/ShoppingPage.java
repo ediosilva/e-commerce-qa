@@ -1,26 +1,24 @@
 package com.br.paginas;
 
 import com.br.paginas.elementosdapagina.ElementoShopppingPage;
-import com.br.validacao.ValidacaoShoppingCart;
+import com.br.validacao.ValidacaoShoppingCartPage;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 
 public class ShoppingPage extends BasePage {
 
     private static final Logger logger = Logger.getLogger(ShoppingPage.class);
     private ElementoShopppingPage elementoPageShoppping;
-    private ValidacaoShoppingCart validacaoShoppingCart;
+    private ValidacaoShoppingCartPage validacaoShoppingCartPage;
     private String tamanhoListaCarrinhoAnterior;
 
     public ShoppingPage(WebDriver driver) {
         super(driver);
         logger.info("contrutor da classe ShoppingPage");
-        validacaoShoppingCart = new ValidacaoShoppingCart();
+        validacaoShoppingCartPage = new ValidacaoShoppingCartPage();
         elementoPageShoppping = new ElementoShopppingPage(driver);
     }
-
 
     public ShoppingPage adicionarItemNoCarrinho(String nomeItem) {
         logger.info("iniciando a inclusao de um novo item no carrinho");
@@ -35,7 +33,11 @@ public class ShoppingPage extends BasePage {
         return this;
     }
 
-    public ShoppingPage escolherTipoPagamento() {
+    public ShoppingCartSummaryPage irParaShoppingCartSummary() {
+        return new ShoppingCartSummaryPage(driver);
+    }
+
+    public ShoppingPage irParaEscolherTipoPagamento() {
         elementoPageShoppping.getBotaoProceedToCheckoutSummary().click();
         logger.info("entrando na aba Address");
         elementoPageShoppping.getBotaoProceedToCheckoutAddress().click();
@@ -52,9 +54,25 @@ public class ShoppingPage extends BasePage {
         return this;
     }
 
+    public ShoppingPage escolherOpcaoPaybyCheck() {
+        elementoPageShoppping.getBotaoPaybyCheck().click();
+        logger.info("Escolhendo a opção Pay by Check");
+        return this;
+    }
+
+    public ShoppingCartPaymentPage irParaAbaPayment() {
+        elementoPageShoppping.getBotaoProceedToCheckoutSummary().click();
+        logger.info("entrando na aba Address");
+        elementoPageShoppping.getBotaoProceedToCheckoutAddress().click();
+        logger.info("entrando na aba Shipping");
+        elementoPageShoppping.getBotaoCheckBoxShipping().click();
+        elementoPageShoppping.getBotaoProceedToCheckoutShipping().click();
+        logger.info("entrando na aba Payment");
+        return new ShoppingCartPaymentPage(driver);
+    }
+
     public ShoppingPage removerItemDoCarrinho() {
-        Actions builder = new Actions(driver);
-        builder.moveToElement(elementoPageShoppping.getCampoListaDeProdutosCarrinho()).perform();
+        elementoPageShoppping.getCampoListaDeProdutosCarrinho();
         elementoPageShoppping.getBotaoRemoverItemCarrinho().get(0).click();
         return this;
     }
@@ -71,27 +89,30 @@ public class ShoppingPage extends BasePage {
         return this;
     }
 
-
     public ShoppingPage realizarLogout() {
         logger.info("fazendo logout");
         elementoPageShoppping.getBotaologout().click();
         return this;
     }
 
-    public ShoppingPage validarSeBotaoRemover() {
-        validacaoShoppingCart.validarSeBotaoRemover(
+    public ShoppingPage validarSeBotaoRemoveu() {
+        validacaoShoppingCartPage.validarSeBotaoRemoveu(
                 tamanhoListaCarrinhoAnterior,
                 elementoPageShoppping.tamanhoListaCarrinho());
         return this;
     }
 
     public ShoppingPage validarSeUmNovoItemFoiAdicionado() {
-        validacaoShoppingCart
+        validacaoShoppingCartPage
                 .validarSeUmNovoItemFoiAdicionado(
                         tamanhoListaCarrinhoAnterior,
                         elementoPageShoppping.tamanhoListaCarrinho());
         return this;
     }
 
-
+    public ShoppingPage validaProdutoCarrinhoAdicionadoIgualAoSelecionado(String nomeProduto) {
+        elementoPageShoppping.getCampoListaDeProdutosCarrinho();
+        validacaoShoppingCartPage.validaProdutoCarrinhoAdicionadoIgualAoSelecionado(elementoPageShoppping.existeProdutoPorNomeNoCarrinho(nomeProduto));
+        return this;
+    }
 }

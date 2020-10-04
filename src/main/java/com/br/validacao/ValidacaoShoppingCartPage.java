@@ -1,15 +1,10 @@
 package com.br.validacao;
 
-import com.br.paginas.ShoppingPage;
-import org.openqa.selenium.WebElement;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 
-public class ValidacaoShoppingCart {
-
-    public void validarItemAdicionadoNoCarrinho(ShoppingPage shoppingCart, int tamanhoListaCarrinho) {
-        // WebElement ele = shoppingCart.getCampoListaDeProdutosCarrinho();
-        /// Assert.assertTrue(true);
-    }
+public class ValidacaoShoppingCartPage {
+    private static final Logger logger = Logger.getLogger(ValidacaoShoppingCartPage.class);
 
     public void validarSeUmNovoItemFoiAdicionado(String tamanhoListaCarrinhoAnterior, String tamanhoListaCarrinho) {
         try {
@@ -21,13 +16,20 @@ public class ValidacaoShoppingCart {
         }
     }
 
-    public void validarSeBotaoRemover(String tamanhoListaCarrinhoAnterior, String tamanhoListaCarrinho) {
+    public void validarSeBotaoRemoveu(String tamanhoListaCarrinhoAnterior, String tamanhoListaCarrinho) {
         try {
+
             if (!tamanhoListaCarrinhoAnterior.equals(tamanhoListaCarrinho)) {
+                logger.error("Quantidade Produto Antes: " + tamanhoListaCarrinhoAnterior);
+                logger.error("Quantidade Produto atual: " + tamanhoListaCarrinho);
                 Assert.fail("Os valores deveriam ser iguais");
             }
         } catch (Exception e) {
             Assert.fail("Erro ao realizar o parse para inteiro metodo validarSeBotaoRemover");
         }
+    }
+
+    public void validaProdutoCarrinhoAdicionadoIgualAoSelecionado(boolean existeProdutoPorNomeNoCarrinho) {
+        Assert.assertTrue(existeProdutoPorNomeNoCarrinho, "O Nome no Carrinho deve ser igual ao que o usuario selecionou");
     }
 }

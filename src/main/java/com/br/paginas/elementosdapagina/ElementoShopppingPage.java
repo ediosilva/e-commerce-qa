@@ -1,6 +1,7 @@
 package com.br.paginas.elementosdapagina;
 
 import com.br.paginas.BasePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -43,6 +44,9 @@ public class ElementoShopppingPage extends BasePage {
     @FindBy(xpath = "//a[contains(@class,'bankwire')]")
     private WebElement botaoPaybyBankWirePayment;
 
+    @FindBy(xpath = "//a[contains(@class,'cheque')]")
+    private WebElement botaoPaybyCheck;
+
     @FindBy(xpath = "//button[contains(@class,'button-medium')]")
     private WebElement botaoIConfirmMyOrderPayment;
 
@@ -51,6 +55,7 @@ public class ElementoShopppingPage extends BasePage {
 
     @FindBy(xpath = "//a[contains(@title,'remove this product from my cart')]")
     private List<WebElement> botaoRemoverItemCarrinho;
+
 
     public ElementoShopppingPage(WebDriver driver) {
         super(driver);
@@ -73,6 +78,7 @@ public class ElementoShopppingPage extends BasePage {
     }
 
     public List<WebElement> getBotaoRemoverItemCarrinho() {
+
         return botaoRemoverItemCarrinho;
     }
 
@@ -96,6 +102,14 @@ public class ElementoShopppingPage extends BasePage {
         this.botaoCheckBoxShipping = botaoCheckBoxShipping;
     }
 
+    public WebElement getBotaoPaybyCheck() {
+        return botaoPaybyCheck;
+    }
+
+    public void setBotaoPaybyCheck(WebElement botaoPaybyCheck) {
+        this.botaoPaybyCheck = botaoPaybyCheck;
+    }
+
     public WebElement getBotaoProceedToCheckoutAddress() {
         return botaoProceedToCheckoutAddress;
     }
@@ -114,6 +128,8 @@ public class ElementoShopppingPage extends BasePage {
 
 
     public WebElement getCampoListaDeProdutosCarrinho() {
+        Actions builder = new Actions(driver);
+        builder.moveToElement(campoListaDeProdutosCarrinho).perform();
         return campoListaDeProdutosCarrinho;
     }
 
@@ -172,6 +188,10 @@ public class ElementoShopppingPage extends BasePage {
 
     public String tamanhoListaCarrinho() {
         return quantidadeItemCarrinho.getText();
+    }
 
+    public boolean existeProdutoPorNomeNoCarrinho(String nomeDoProduto) {
+        WebElement produtoCarrinho = driver.findElement(By.xpath("//a[contains(@title,'" + nomeDoProduto + "')]"));
+        return produtoCarrinho.isEnabled() && produtoCarrinho.isDisplayed() ? true : false;
     }
 }

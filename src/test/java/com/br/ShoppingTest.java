@@ -1,45 +1,60 @@
 package com.br;
 
 import com.br.dataproviders.DataProviderItensCompra;
-import com.br.modelos.Usuario;
-import com.br.paginas.HomePage;
 import com.br.util.BaseTest;
 import org.apache.log4j.Logger;
-import org.testng.annotations.BeforeMethod;
+
 import org.testng.annotations.Test;
 
 public class ShoppingTest extends BaseTest {
     private static final Logger logger = Logger.getLogger(ShoppingTest.class);
 
-    private HomePage homePage;
-    private Usuario usuario;
-
-    @BeforeMethod
-    public void inicializarTela() {
-        logger.info("iniciando os driver");
-        homePage = new HomePage(driver);
-        usuario = new Usuario("edio.silva@acad.pucrs.br", "03071989");
-        logger.info("driver inicializado com sucesso");
-    }
-
     @Test(dataProvider = "produtos", dataProviderClass = DataProviderItensCompra.class)
-    public void validarCompraComUmItemPorPedido(String nomeProduto) {
-        logger.info("entrando no metodo validarCompraComUmItemPorPedido");
+    public void validarCompraComUmProdutoPorPedido(String nomeProduto) {
+        logger.info("entrando no metodo validarCompraComUmProdutoPorPedido");
         homePage.entrar()
                 .entrarTelaLogin()
                 .realizarLogin(usuario)
                 .adicionarItemNoCarrinho(nomeProduto)
-                .escolherTipoPagamento()
+                .irParaEscolherTipoPagamento()
                 .escolherOpcaoPaybyBankWire()
                 .finalizarPedido()
                 .realizarLogout();
-        logger.info("saindo no metodo validarCompraComUmItemPorPedido");
-
+        logger.info("saindo no metodo validarCompraComUmProdutoPorPedido");
     }
 
     @Test(dataProvider = "produto", dataProviderClass = DataProviderItensCompra.class)
-    public void validarCompraMaisItemPorPedido(String nomeProduto) {
-        logger.info("entrando no metodo validarListaDecarrinhoItemTshirt");
+    public void validaFluxoPagamentoBank(String nomeProduto) {
+        logger.info("entrando no metodo validaFluxoPagamentoBank");
+        homePage.entrar()
+                .entrarTelaLogin()
+                .realizarLogin(usuario)
+                .adicionarItemNoCarrinho(nomeProduto)
+                .irParaEscolherTipoPagamento()
+                .escolherOpcaoPaybyBankWire()
+                .finalizarPedido()
+                .realizarLogout();
+        logger.info("saindo no metodo validaFluxoPagamentoBank");
+    }
+
+
+    @Test(dataProvider = "produto", dataProviderClass = DataProviderItensCompra.class)
+    public void validaFluxoPagamentoCheck(String nomeProduto) {
+        logger.info("entrando no metodo validaFluxoPagamentoCheck");
+        homePage.entrar()
+                .entrarTelaLogin()
+                .realizarLogin(usuario)
+                .adicionarItemNoCarrinho(nomeProduto)
+                .irParaEscolherTipoPagamento()
+                .escolherOpcaoPaybyCheck()
+                .finalizarPedido()
+                .realizarLogout();
+        logger.info("saindo no metodo validaFluxoPagamentoCheck");
+    }
+
+    @Test(dataProvider = "produto", dataProviderClass = DataProviderItensCompra.class)
+    public void validarVariosProdutosPorPedido(String nomeProduto) {
+        logger.info("entrando no metodo validarVariosProdutosPorPedido");
         homePage.entrar()
                 .entrarTelaLogin()
                 .realizarLogin(usuario)
@@ -47,12 +62,11 @@ public class ShoppingTest extends BaseTest {
                 .pegarQuantidadeItemCarrinhoAnterior()
                 .adicionarItemNoCarrinho(nomeProduto)
                 .validarSeUmNovoItemFoiAdicionado()
-                .escolherTipoPagamento()
+                .irParaEscolherTipoPagamento()
                 .escolherOpcaoPaybyBankWire()
                 .finalizarPedido()
                 .realizarLogout();
-        logger.info("saindo no metodo validarListaDecarrinhoItemTshirt");
-
+        logger.info("saindo no metodo validarVariosProdutosPorPedido");
     }
 
     @Test(dataProvider = "inserirDoisProdutosAoMesmoTempo", dataProviderClass = DataProviderItensCompra.class)
@@ -65,12 +79,29 @@ public class ShoppingTest extends BaseTest {
                 .pegarQuantidadeItemCarrinhoAnterior()
                 .adicionarItemNoCarrinho(nomeProduto2)
                 .removerItemDoCarrinho()
-                .validarSeBotaoRemover()
-                .escolherTipoPagamento()
+                .irParaEscolherTipoPagamento()
+                .validarSeBotaoRemoveu()
                 .escolherOpcaoPaybyBankWire()
                 .finalizarPedido()
                 .realizarLogout();
         logger.info("saindo no metodo validarAdicionarDoisItemERemover");
+    }
+
+    @Test(dataProvider = "produto", dataProviderClass = DataProviderItensCompra.class)
+    public void validarSeOProdutoAdicionadoNoCarrinhoEIgualSelecionado(String nomeProduto) {
+        logger.info("entrando no metodo validarSeOProdutoAdicionadoNoCarrinhoEIgualSelecionado");
+        homePage.entrar()
+                .entrarTelaLogin()
+                .realizarLogin(usuario)
+                .adicionarItemNoCarrinho(nomeProduto)
+                .irParaEscolherTipoPagamento()
+                .validaProdutoCarrinhoAdicionadoIgualAoSelecionado(nomeProduto)
+                .escolherOpcaoPaybyBankWire()
+                .finalizarPedido()
+                .realizarLogout();
+        logger.info("saindo no metodo validarCompraComUmProdutoPorPedido");
+        logger.info("saindo no metodo validarSeOProdutoAdicionadoNoCarrinhoEIgualSelecionado");
+
 
     }
 
