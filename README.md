@@ -1,8 +1,6 @@
 # Selenium Project Automation APP E-commerce-qa
 Projeto de Automação de teste para o site http://automationpractice.com/index.php
 
-Estrutura com exemplo para automação com selenium 
-
 ## Configurações / Ferramentas
 
 * [Maven](https://maven.apache.org/) - Dependency Management
