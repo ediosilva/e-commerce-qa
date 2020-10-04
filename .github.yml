@@ -1,0 +1,7 @@
+stages:
+  - funional
+
+Funcional:
+  stage: funcional
+  script:
+   - mvn clean test -D navegador=chrome
