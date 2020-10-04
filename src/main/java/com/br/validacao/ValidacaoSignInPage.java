@@ -1,13 +1,13 @@
 package com.br.validacao;
 
-import com.br.paginas.SignInPage;
+import com.br.paginas.elementosdapagina.ElementoSignInPage;
 import org.testng.Assert;
 
 public class ValidacaoSignInPage {
 
-    public void validarCamposTelaSignIn(SignInPage loginPage){
-        Assert.assertTrue(loginPage.getBotaoSubmit().isEnabled());
-        Assert.assertTrue(loginPage.getCampoEmail().isEnabled());
-        Assert.assertTrue(loginPage.getCampoSenha().isEnabled());
+    public void validarCamposTelaSignIn(ElementoSignInPage elementoSignInPage) {
+        Assert.assertTrue(elementoSignInPage.getBotaoSubmit().isEnabled());
+        Assert.assertTrue(elementoSignInPage.getCampoEmail().isEnabled());
+        Assert.assertTrue(elementoSignInPage.getCampoSenha().isEnabled());
     }
 }

@@ -44,12 +44,33 @@ public class ShoppingTest extends BaseTest {
                 .entrarTelaLogin()
                 .realizarLogin(usuario)
                 .adicionarItemNoCarrinho(nomeProduto)
+                .pegarQuantidadeItemCarrinhoAnterior()
                 .adicionarItemNoCarrinho(nomeProduto)
+                .validarSeUmNovoItemFoiAdicionado()
                 .escolherTipoPagamento()
                 .escolherOpcaoPaybyBankWire()
                 .finalizarPedido()
                 .realizarLogout();
         logger.info("saindo no metodo validarListaDecarrinhoItemTshirt");
+
+    }
+
+    @Test(dataProvider = "inserirDoisProdutosAoMesmoTempo", dataProviderClass = DataProviderItensCompra.class)
+    public void validarAdicionarDoisItemERemover(String nomeProduto1, String nomeProduto2) {
+        logger.info("entrando no metodo validarAdicionarDoisItemERemover");
+        homePage.entrar()
+                .entrarTelaLogin()
+                .realizarLogin(usuario)
+                .adicionarItemNoCarrinho(nomeProduto1)
+                .pegarQuantidadeItemCarrinhoAnterior()
+                .adicionarItemNoCarrinho(nomeProduto2)
+                .removerItemDoCarrinho()
+                .validarSeBotaoRemover()
+                .escolherTipoPagamento()
+                .escolherOpcaoPaybyBankWire()
+                .finalizarPedido()
+                .realizarLogout();
+        logger.info("saindo no metodo validarAdicionarDoisItemERemover");
 
     }
 

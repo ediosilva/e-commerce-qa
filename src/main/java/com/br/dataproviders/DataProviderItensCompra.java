@@ -19,5 +19,11 @@ public class DataProviderItensCompra {
         data[0][0] = "Faded Short Sleeve T-shirts";
         return data;
     }
+
+    @DataProvider(name = "inserirDoisProdutosAoMesmoTempo")
+    public static Object[][] inserirDoisProdutosAoMesmoTempo() {
+        Object[][] data = new Object[][]{{"Faded Short Sleeve T-shirts", "Blouses"}};
+        return data;
+    }
 }
 

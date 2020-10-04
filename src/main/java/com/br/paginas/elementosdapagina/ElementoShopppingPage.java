@@ -3,7 +3,10 @@ package com.br.paginas.elementosdapagina;
 import com.br.paginas.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 public class ElementoShopppingPage extends BasePage {
 
@@ -43,6 +46,12 @@ public class ElementoShopppingPage extends BasePage {
     @FindBy(xpath = "//button[contains(@class,'button-medium')]")
     private WebElement botaoIConfirmMyOrderPayment;
 
+    @FindBy(xpath = "//span[contains(@class,'ajax_cart_quantity')]")
+    private WebElement quantidadeItemCarrinho;
+
+    @FindBy(xpath = "//a[contains(@title,'remove this product from my cart')]")
+    private List<WebElement> botaoRemoverItemCarrinho;
+
     public ElementoShopppingPage(WebDriver driver) {
         super(driver);
     }
@@ -55,6 +64,21 @@ public class ElementoShopppingPage extends BasePage {
         this.campoDePesquisa = campoDePesquisa;
     }
 
+    public WebElement getQuantidadeItemCarrinho() {
+        return quantidadeItemCarrinho;
+    }
+
+    public void setQuantidadeItemCarrinho(WebElement quantidadeItemCarrinho) {
+        this.quantidadeItemCarrinho = quantidadeItemCarrinho;
+    }
+
+    public List<WebElement> getBotaoRemoverItemCarrinho() {
+        return botaoRemoverItemCarrinho;
+    }
+
+    public void setBotaoRemoverItemCarrinho(List<WebElement> botaoRemoverItemCarrinho) {
+        this.botaoRemoverItemCarrinho = botaoRemoverItemCarrinho;
+    }
 
     public WebElement getBotaoAddToCart() {
         return botaoAddToCart;
@@ -144,5 +168,10 @@ public class ElementoShopppingPage extends BasePage {
 
     public void setBotaoIConfirmMyOrderPayment(WebElement botaoIConfirmMyOrderPayment) {
         this.botaoIConfirmMyOrderPayment = botaoIConfirmMyOrderPayment;
+    }
+
+    public String tamanhoListaCarrinho() {
+        return quantidadeItemCarrinho.getText();
+
     }
 }

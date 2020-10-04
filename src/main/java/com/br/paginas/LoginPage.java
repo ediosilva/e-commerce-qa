@@ -6,9 +6,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
+
     private static final Logger logger = Logger.getLogger(LoginPage.class);
-
-
     private ElemetoLoginPage elemetoLoginPage;
 
     public LoginPage(WebDriver driver) {
