@@ -22,27 +22,36 @@ public class ShoppingTest extends BaseTest {
         logger.info("driver inicializado com sucesso");
     }
 
-    @Test(dataProvider = "dadosValidos", dataProviderClass = DataProviderItensCompra.class)
-    public void compraItensSucesso(String nomeProduto) {
+    @Test(dataProvider = "produtos", dataProviderClass = DataProviderItensCompra.class)
+    public void validarCompraComUmItemPorPedido(String nomeProduto) {
+        logger.info("entrando no metodo validarCompraComUmItemPorPedido");
+        homePage.entrar()
+                .entrarTelaLogin()
+                .realizarLogin(usuario)
+                .adicionarItemNoCarrinho(nomeProduto)
+                .escolherTipoPagamento()
+                .escolherOpcaoPaybyBankWire()
+                .finalizarPedido()
+                .realizarLogout();
+        logger.info("saindo no metodo validarCompraComUmItemPorPedido");
+
+    }
+
+    @Test(dataProvider = "produto", dataProviderClass = DataProviderItensCompra.class)
+    public void validarCompraMaisItemPorPedido(String nomeProduto) {
         logger.info("entrando no metodo validarListaDecarrinhoItemTshirt");
         homePage.entrar()
                 .entrarTelaLogin()
                 .realizarLogin(usuario)
-                .realizarCompra(nomeProduto)
+                .adicionarItemNoCarrinho(nomeProduto)
+                .adicionarItemNoCarrinho(nomeProduto)
+                .escolherTipoPagamento()
+                .escolherOpcaoPaybyBankWire()
+                .finalizarPedido()
                 .realizarLogout();
+        logger.info("saindo no metodo validarListaDecarrinhoItemTshirt");
 
     }
 
-    @Test(dataProvider = "dadosValidos", dataProviderClass = DataProviderItensCompra.class)
-    public void test(String nomeProduto) {
-        logger.info("entrando no metodo validarListaDecarrinhoItemTshirt");
-        homePage.entrar()
-                .entrarTelaLogin()
-                .realizarLogin(usuario)
-                .realizarCompra(nomeProduto)
-                .realizarCompra(nomeProduto)
-                .realizarLogout();
-
-    }
 
 }

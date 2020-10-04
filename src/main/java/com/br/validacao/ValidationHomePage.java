@@ -1,6 +1,7 @@
 package com.br.validacao;
 
 import com.br.paginas.HomePage;
+import com.br.paginas.elementosdapagina.ElementoHomePage;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -13,15 +14,15 @@ public class ValidationHomePage {
     public ValidationHomePage() {
     }
 
-    public void validacaoSeEstouNaTelaHome(HomePage homePage) {
+    public void validacaoSeEstouNaTelaHome( ElementoHomePage elementoHomePage) {
         logger.info("Entrei no metodo validacaoSeEstouNaTelaHome");
         logger.info("realizando as validações Asserts");
-        Assert.assertTrue(homePage.getBotaoLogin().isDisplayed());
-        Assert.assertTrue(homePage.getBotaoLogin().isEnabled());
-        Assert.assertTrue(homePage.getLogoDaTelaPrincipal().isEnabled());
-        Assert.assertTrue(homePage.getCampoListaDeProdutosCarrinho().isEnabled());
-        Assert.assertTrue(homePage.getCampoDePesquisa().isEnabled());
-        Assert.assertEquals(homePage.getCampoListaDeProdutosCarrinho().getText(), MENSAGEM_NO_CAMPO_CARRINHO);
+        Assert.assertTrue(elementoHomePage.getBotaoLogin().isDisplayed());
+        Assert.assertTrue(elementoHomePage.getBotaoLogin().isEnabled());
+        Assert.assertTrue(elementoHomePage.getLogoDaTelaPrincipal().isEnabled());
+        Assert.assertTrue(elementoHomePage.getCampoListaDeProdutosCarrinho().isEnabled());
+        Assert.assertTrue(elementoHomePage.getCampoDePesquisa().isEnabled());
+        Assert.assertEquals(elementoHomePage.getCampoListaDeProdutosCarrinho().getText(), MENSAGEM_NO_CAMPO_CARRINHO);
         logger.info("validação nos assert comcluida com sucesso");
         logger.info("Saindo do metodo validacaoSeEstouNaTelaHome");
 

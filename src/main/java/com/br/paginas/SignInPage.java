@@ -1,11 +1,14 @@
 package com.br.paginas;
 
 import com.br.validacao.ValidacaoSignInPage;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class SignInPage extends BasePage {
+
+    private static final Logger logger = Logger.getLogger(SignInPage.class);
 
     @FindBy(xpath = "//label[@for='email_create']")
     private WebElement textoEnderecoEmail;
@@ -64,6 +67,7 @@ public class SignInPage extends BasePage {
     }
 
     public LoginPage entrarTelaLogin() {
+        logger.info("entrando para logar na tela");
         return new LoginPage(driver);
     }
 

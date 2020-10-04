@@ -1,47 +1,27 @@
 package com.br.paginas;
 
 import com.br.modelos.Usuario;
+import com.br.paginas.elementosdapagina.ElemetoLoginPage;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
-    @FindBy(id = "email")
-    private WebElement campoEmail;
+    private static final Logger logger = Logger.getLogger(LoginPage.class);
 
-    @FindBy(id = "passwd")
-    private WebElement campoSenha;
 
-    @FindBy(id = "SubmitLogin")
-    private WebElement botaoSubmit;
-
-    @FindBy(className = "alert alert-danger")
-    private WebElement campoMensagemErro;
+    private ElemetoLoginPage elemetoLoginPage;
 
     public LoginPage(WebDriver driver) {
         super(driver);
-    }
-
-    public WebElement getCampoEmail() {
-        return campoEmail;
-    }
-
-    public WebElement getCampoSenha() {
-        return campoSenha;
-    }
-
-    public WebElement getBotaoSubmit() {
-        return botaoSubmit;
-    }
-
-    public WebElement getCampoMensagemErro() {
-        return campoMensagemErro;
+        elemetoLoginPage = new ElemetoLoginPage(driver);
     }
 
     public ShoppingPage realizarLogin(Usuario usuario) {
-        campoEmail.sendKeys(usuario.getEmail());
-        campoSenha.sendKeys(usuario.getSenha());
-        botaoSubmit.click();
+        logger.info("realizando o logins: " + usuario);
+        elemetoLoginPage.getCampoEmail().sendKeys(usuario.getEmail());
+        elemetoLoginPage.getCampoSenha().sendKeys(usuario.getSenha());
+        elemetoLoginPage.getBotaoSubmit().click();
+        logger.info("login realizado com sucesso");
         return new ShoppingPage(driver);
     }
 }
